@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://ehsuyjxlfmm5"]
+
+[ext_resource type="Script" path="res://script/main_scene.gd" id="1_5hal6"]
+[ext_resource type="Script" path="res://script/button_exit.gd" id="2_8q416"]
+
+[node name="MainScene" type="Node2D"]
+script = ExtResource("1_5hal6")
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 500.0
+offset_bottom = 500.0
+
+[node name="Button_Exit" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -192.0
+offset_bottom = 94.0
+grow_horizontal = 0
+script = ExtResource("2_8q416")
+
+[connection signal="pressed" from="Panel/Button_Exit" to="Panel/Button_Exit" method="_on_pressed"]
