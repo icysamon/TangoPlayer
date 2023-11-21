@@ -1,9 +1,11 @@
 extends Node2D
 
 @onready var viewport_main = get_viewport()
+@onready var pannel_ground = $Panel_Ground
 
-var flag_mouse : bool = true
-var temp_dir : Vector2i
+var flag_mouse = true
+var temp_dir
+var size = Vector2i(500, 250)
 
 func _ready():
 	# 信号
@@ -18,10 +20,15 @@ func _ready():
 	viewport_main.transparent = true # 透明化
 	viewport_main.unresizable = true # サイズ変更禁止
 	viewport_main.borderless = true # フレームを隠れる
-	viewport_main.size = Vector2i(500, 500) # サイズ設定
+	viewport_main.size = size # サイズ設定
+	viewport_main.always_on_top = true # ピン留め
 	
-	viewport_main.set_transparent_background(true)
-	viewport_main.set_initial_position(0)
+	viewport_main.set_transparent_background(true) # 透明設定
+	viewport_main.set_initial_position(0) # ポジション設定
+	
+	# UI
+	pannel_ground.size = size
+	
 	pass
 
 
@@ -37,22 +44,26 @@ func _process(delta):
 
 # ファイルを得る
 func on_files_dropped(files):
-	print("get file")
+	#print("get file")
+	pass
 
 # フォーカスを得る	
 func on_focus_entered():
-	print("focus_entered")
+	#print("focus_entered")
+	pass
 
 # フォーカスを失う
 func on_focus_exited():
-	print("focus_exited")
+	#print("focus_exited")
+	pass
 
 # マウスを得る	
 func on_mouse_entered():
 	flag_mouse = true
-	print("mouse_entered")
+	#print("mouse_entered")
+	pass
 
 # マウスを失う
 func on_mouse_exited():
 	flag_mouse = false
-	print("mouse_exited")
+	#print("mouse_exited")
