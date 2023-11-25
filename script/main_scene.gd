@@ -2,10 +2,59 @@ extends Node2D
 
 @onready var viewport_main = get_viewport()
 @onready var pannel_ground = $Panel_Ground
+@onready var label_title = $Panel_Ground/Label_Title
 
 var flag_mouse = true
-var temp_dir
-var size = Vector2i(500, 250)
+var temp_dir = 0
+var size = Vector2i(500, 300)
+var file_data = FileData.new()
+var file_flag : bool
+
+class FileData:
+	var path
+	var type
+	var name
+	var text
+	var file_access
+	var text_line = []
+	var line = 0 # 列数
+	
+	func init(files):
+		path = files[0]
+		type = files[0].get_extension()
+		name = files[0].get_file()	
+		file_access = FileAccess.open(files[0], FileAccess.READ)
+		text = file_access.get_as_text()
+		
+		tag_serch()
+		
+	func tag_serch():
+		while true:
+			text_line.resize(line + 1)
+			text_line[line] = file_access.get_line()
+			
+			var span_pos = text_line[line].findn("span")
+			
+			if span_pos != -1:
+				var tag_end = text_line[line].findn("</", span_pos)
+				var tag_start = text_line[line].findn(">", span_pos)
+				var tango = text_line[line].substr(tag_start + 1, tag_end - tag_start - 1)
+				print(tango)
+				print(line)
+				line = line + 1
+				return tango
+				break
+			
+			else:
+				line = line + 1
+
+		pass
+	
+	func title(str):
+		return str
+		
+
+
 
 func _ready():
 	# 信号
@@ -29,14 +78,14 @@ func _ready():
 	# UI
 	pannel_ground.size = size
 	
-	pass
 
 
 func _process(delta):
+	# フレーム移動
 	if Input.is_action_just_pressed("MOUSE_BUTTON_LEFT"):
 		temp_dir = DisplayServer.mouse_get_position() - viewport_main.get_position()
 
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):	
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		viewport_main.set_position(DisplayServer.mouse_get_position() - temp_dir)
 		
 	return delta
@@ -44,8 +93,15 @@ func _process(delta):
 
 # ファイルを得る
 func on_files_dropped(files):
-	#print("get file")
-	pass
+
+	if files.size() == 1:
+		file_flag = true
+		file_data.init(files)
+
+
+	else:
+		print("Just support one file.")
+
 
 # フォーカスを得る	
 func on_focus_entered():
@@ -67,3 +123,12 @@ func on_mouse_entered():
 func on_mouse_exited():
 	flag_mouse = false
 	#print("mouse_exited")
+
+
+func _on_button_next_pressed():
+	if file_flag: label_title.text = file_data.tag_serch()
+	pass
+
+
+func _on_button_exit_pressed():
+	get_tree().quit() # プログラム終了

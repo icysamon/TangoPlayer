@@ -13,10 +13,13 @@ config_version=5
 config/name="TangoPlayList"
 run/main_scene="res://scene/main_scene.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 
 [display]
 
+window/size/viewport_width=500
+window/size/viewport_height=300
 window/size/resizable=false
 
 [input]
@@ -29,5 +32,4 @@ MOUSE_BUTTON_LEFT={
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
