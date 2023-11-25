@@ -1,6 +1,6 @@
-# MDX Parser in Godot
+# Tango Player
 ## Introduction
-a mdx parser in Godot, which run by godot's xml parser.
+A mdx parser in Godot, which run by godot's xml parser.
 
 ## Path
 - Godot 4
