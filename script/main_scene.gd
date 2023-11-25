@@ -3,7 +3,7 @@ extends Node2D
 @onready var viewport_main = get_viewport()
 @onready var pannel_ground = $Panel_Ground
 @onready var label_title = $Panel_Ground/Label_Title
-
+@onready var label_text = $Panel_Ground/Label_Text
 var flag_mouse = true
 var temp_dir = 0
 var size = Vector2i(500, 300)
@@ -16,8 +16,8 @@ class FileData:
 	var name
 	var text
 	var file_access
-	var text_line = []
-	var line = 0 # 列数
+	
+	var parser = XMLParser.new()
 	
 	func init(files):
 		path = files[0]
@@ -26,33 +26,59 @@ class FileData:
 		file_access = FileAccess.open(files[0], FileAccess.READ)
 		text = file_access.get_as_text()
 		
-		tag_serch()
+		parser.open(path)
 		
-	func tag_serch():
-		while true:
-			text_line.resize(line + 1)
-			text_line[line] = file_access.get_line()
+		
+	func xml_parser():
+		# init
+		var pos = 0
+		var in_main = false
+		var in_div = 0
+		
+		var title : String = ""
+		var text : String = ""
+		
+		# while
+		while parser.read() != ERR_FILE_EOF:
 			
-			var span_pos = text_line[line].findn("span")
-			
-			if span_pos != -1:
-				var tag_end = text_line[line].findn("</", span_pos)
-				var tag_start = text_line[line].findn(">", span_pos)
-				var tango = text_line[line].substr(tag_start + 1, tag_end - tag_start - 1)
-				print(tango)
-				print(line)
-				line = line + 1
-				return tango
-				break
-			
-			else:
-				line = line + 1
+			# NODE_ELEMENT
+			if parser.get_node_type() == XMLParser.NODE_ELEMENT:
+				## main
+				if parser.get_node_name() == "main": in_main = true
 
-		pass
-	
-	func title(str):
-		return str
+				# span
+				elif in_main && parser.get_node_name() == "span":
+					if parser.get_named_attribute_value_safe("class") == "title":
+						while parser.read() != ERR_FILE_EOF:
+							if parser.get_node_type() == XMLParser.NODE_TEXT:
+								title = parser.get_node_data()
+								print("Title: " + parser.get_node_data())
+								break
+				
+				## div
+				elif parser.get_node_name() == "div": in_div += 1
+					
+
+			# NODE_ELEMENT_END
+			elif parser.get_node_type() == XMLParser.NODE_ELEMENT_END:
+				## div
+				if parser.get_node_name() == "div": in_div -= 1
+				
+				## main
+				if parser.get_node_name() == "main":
+					in_main = false
+					break
+			
+			
+			# XMLParser.NODE_TEXT	
+			elif parser.get_node_type() == XMLParser.NODE_TEXT:
+				# in main && not in div
+				if in_main && in_div == 0:
+					text = text + parser.get_node_data()
+					print("Text: " + parser.get_node_data())
 		
+		return [title, text]
+
 
 
 
@@ -126,7 +152,11 @@ func on_mouse_exited():
 
 
 func _on_button_next_pressed():
-	if file_flag: label_title.text = file_data.tag_serch()
+	if file_flag:
+		var array = []
+		array = file_data.xml_parser()
+		label_title.text = array[0]
+		label_text.text = array[1]
 	pass
 
 
