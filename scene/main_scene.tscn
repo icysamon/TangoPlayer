@@ -25,7 +25,7 @@ grow_horizontal = 0
 layout_mode = 1
 offset_right = 331.0
 offset_bottom = 85.0
-text = "Abandon"
+text = "MDX Parser"
 label_settings = ExtResource("4_7edxa")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -36,10 +36,7 @@ offset_left = 18.0
 offset_top = 116.0
 offset_right = 488.0
 offset_bottom = 275.0
-text = "v.
-抛弃，遗弃；（因危险）离开，舍弃；中止，不再有；放弃（信念、信仰或看法）；陷入，沉湎于（某种情感）
-n.
-放任，放纵"
+text = "Drop a file into the program."
 autowrap_mode = 2
 
 [node name="Button_Next" type="Button" parent="Panel_Ground"]

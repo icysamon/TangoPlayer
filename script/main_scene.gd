@@ -43,10 +43,10 @@ class FileData:
 			
 			# NODE_ELEMENT
 			if parser.get_node_type() == XMLParser.NODE_ELEMENT:
-				## main
+				## <main>
 				if parser.get_node_name() == "main": in_main = true
 
-				# span
+				# <span>
 				elif in_main && parser.get_node_name() == "span":
 					if parser.get_named_attribute_value_safe("class") == "title":
 						while parser.read() != ERR_FILE_EOF:
@@ -55,16 +55,16 @@ class FileData:
 								print("Title: " + parser.get_node_data())
 								break
 				
-				## div
+				## <div>
 				elif parser.get_node_name() == "div": in_div += 1
 					
 
 			# NODE_ELEMENT_END
 			elif parser.get_node_type() == XMLParser.NODE_ELEMENT_END:
-				## div
+				## <div>
 				if parser.get_node_name() == "div": in_div -= 1
 				
-				## main
+				## <main>
 				if parser.get_node_name() == "main":
 					in_main = false
 					break
