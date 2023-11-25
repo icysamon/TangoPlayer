@@ -31,9 +31,10 @@ class FileData:
 		
 	func xml_parser():
 		# init
-		var pos = 0
 		var in_main = false
+		var span_title = false
 		var in_div = 0
+		
 		
 		var title : String = ""
 		var text : String = ""
@@ -49,11 +50,8 @@ class FileData:
 				# <span>
 				elif in_main && parser.get_node_name() == "span":
 					if parser.get_named_attribute_value_safe("class") == "title":
-						while parser.read() != ERR_FILE_EOF:
-							if parser.get_node_type() == XMLParser.NODE_TEXT:
-								title = parser.get_node_data()
-								print("Title: " + parser.get_node_data())
-								break
+						span_title = true
+
 				
 				## <div>
 				elif parser.get_node_name() == "div": in_div += 1
@@ -73,9 +71,13 @@ class FileData:
 			# XMLParser.NODE_TEXT	
 			elif parser.get_node_type() == XMLParser.NODE_TEXT:
 				# in main && not in div
-				if in_main && in_div == 0:
+				if in_main && !span_title && in_div == 0:
 					text = text + parser.get_node_data()
-					print("Text: " + parser.get_node_data())
+					
+				elif in_main && span_title:
+					title = parser.get_node_data()
+					span_title = false
+					
 		
 		return [title, text]
 
@@ -153,10 +155,12 @@ func on_mouse_exited():
 
 func _on_button_next_pressed():
 	if file_flag:
-		var array = []
-		array = file_data.xml_parser()
-		label_title.text = array[0]
-		label_text.text = array[1]
+		var inf_get = []
+		inf_get = file_data.xml_parser()
+		
+		if inf_get != ["",""]:
+			label_title.text = inf_get[0]
+			label_text.text = inf_get[1]
 	pass
 
 
