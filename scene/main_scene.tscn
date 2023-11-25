@@ -1,13 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://ehsuyjxlfmm5"]
+[gd_scene load_steps=6 format=3 uid="uid://ehsuyjxlfmm5"]
 
 [ext_resource type="Script" path="res://script/main_scene.gd" id="1_5hal6"]
 [ext_resource type="Theme" uid="uid://dpj4bp71gm0uc" path="res://theme/theme1.tres" id="2_7s7xu"]
+[ext_resource type="Shader" path="res://shader/background.gdshader" id="2_rewvx"]
 [ext_resource type="LabelSettings" uid="uid://0ul007kv1yre" path="res://label_settings/new_label_settings.tres" id="4_7edxa"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ulqx"]
+shader = ExtResource("2_rewvx")
+shader_parameter/color = Color(0.690196, 0.47451, 0.686275, 1)
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_5hal6")
 
 [node name="Panel_Ground" type="Panel" parent="."]
+material = SubResource("ShaderMaterial_0ulqx")
 offset_right = 500.0
 offset_bottom = 300.0
 theme = ExtResource("2_7s7xu")
@@ -23,8 +29,8 @@ grow_horizontal = 0
 
 [node name="Label_Title" type="Label" parent="Panel_Ground"]
 layout_mode = 1
-offset_right = 331.0
-offset_bottom = 85.0
+offset_right = 313.0
+offset_bottom = 77.0
 text = "MDX Parser"
 label_settings = ExtResource("4_7edxa")
 horizontal_alignment = 1
@@ -32,10 +38,10 @@ vertical_alignment = 1
 
 [node name="Label_Text" type="Label" parent="Panel_Ground"]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 116.0
-offset_right = 488.0
-offset_bottom = 275.0
+offset_left = 14.0
+offset_top = 73.0
+offset_right = 484.0
+offset_bottom = 284.0
 text = "Drop a file into the program."
 autowrap_mode = 2
 
