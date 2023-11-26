@@ -1,13 +1,33 @@
-[gd_scene load_steps=6 format=3 uid="uid://ehsuyjxlfmm5"]
+[gd_scene load_steps=10 format=3 uid="uid://ehsuyjxlfmm5"]
 
 [ext_resource type="Script" path="res://script/main_scene.gd" id="1_5hal6"]
 [ext_resource type="Theme" uid="uid://dpj4bp71gm0uc" path="res://theme/theme1.tres" id="2_7s7xu"]
 [ext_resource type="Shader" path="res://shader/background.gdshader" id="2_rewvx"]
 [ext_resource type="LabelSettings" uid="uid://0ul007kv1yre" path="res://label_settings/new_label_settings.tres" id="4_7edxa"]
+[ext_resource type="Shader" path="res://shader/button.gdshader" id="4_hw1lf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0ulqx"]
 shader = ExtResource("2_rewvx")
 shader_parameter/color = Color(0.690196, 0.47451, 0.686275, 1)
+shader_parameter/angle = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y0xnw"]
+shader = ExtResource("4_hw1lf")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/r = 0.4
+shader_parameter/color = Color(0.898039, 0, 0, 0.564706)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_en7wl"]
+shader = ExtResource("4_hw1lf")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/r = 0.4
+shader_parameter/color = Color(0.54902, 1, 0.666667, 0.847059)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_faqgf"]
+shader = ExtResource("4_hw1lf")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/r = 0.4
+shader_parameter/color = Color(0.709804, 0.592157, 0.101961, 1)
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_5hal6")
@@ -19,19 +39,22 @@ offset_bottom = 300.0
 theme = ExtResource("2_7s7xu")
 
 [node name="Button_Exit" type="Button" parent="Panel_Ground"]
+material = SubResource("ShaderMaterial_y0xnw")
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -50.0
-offset_bottom = 50.0
+offset_left = -45.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 45.0
 grow_horizontal = 0
 
 [node name="Label_Title" type="Label" parent="Panel_Ground"]
 layout_mode = 1
 offset_right = 313.0
 offset_bottom = 77.0
-text = "MDX Parser"
+text = "TangoPlayer"
 label_settings = ExtResource("4_7edxa")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -46,9 +69,40 @@ text = "Drop a file into the program."
 autowrap_mode = 2
 
 [node name="Button_Next" type="Button" parent="Panel_Ground"]
+material = SubResource("ShaderMaterial_en7wl")
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 415.0
+offset_top = 5.0
+offset_right = 455.0
+offset_bottom = 45.0
+
+[node name="Label" type="Label" parent="Panel_Ground/Button_Next"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = 34.0
+offset_bottom = 33.0
+text = "R"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button_Back" type="Button" parent="Panel_Ground"]
+material = SubResource("ShaderMaterial_faqgf")
+layout_mode = 0
+offset_left = 7.0
+offset_top = 5.0
+offset_right = 47.0
+offset_bottom = 45.0
+
+[node name="Label" type="Label" parent="Panel_Ground/Button_Back"]
+offset_left = 8.0
+offset_top = 7.0
+offset_right = 34.0
+offset_bottom = 33.0
+text = "L"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="Panel_Ground/Button_Exit" to="." method="_on_button_exit_pressed"]
 [connection signal="pressed" from="Panel_Ground/Button_Next" to="." method="_on_button_next_pressed"]
+[connection signal="pressed" from="Panel_Ground/Button_Back" to="." method="_on_button_back_pressed"]

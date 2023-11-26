@@ -10,6 +10,10 @@ var size = Vector2i(500, 300)
 var file_data = FileData.new()
 var file_flag : bool
 
+var inf_list : Array
+var inf_num : int = 0
+var inf_last : int = 0
+
 class FileData:
 	var path
 	var type
@@ -125,6 +129,7 @@ func on_files_dropped(files):
 	if files.size() == 1:
 		file_flag = true
 		file_data.init(files)
+		_on_button_next_pressed()
 
 
 	else:
@@ -155,14 +160,44 @@ func on_mouse_exited():
 
 func _on_button_next_pressed():
 	if file_flag:
-		var inf_get = []
-		inf_get = file_data.xml_parser()
+		if inf_num == inf_last:
+			# Get information from FileData
+			var inf_get = []
+			inf_get = file_data.xml_parser()
+			
+			# Set Label
+			if inf_get != ["",""]:
+				label_title.text = inf_get[0]
+				label_text.text = inf_get[1]
+				
+				# Save data
+				inf_last += 1
+				inf_num = inf_last # last pos
+				
+				inf_list.resize(inf_last + 1)
+				inf_list[inf_last] = inf_get # not use 0 idx
+				
+				
+				
+
+
+		elif inf_num != inf_last:
+			inf_num += 1
+			label_title.text = inf_list[inf_num][0]
+			label_text.text = inf_list[inf_num][1]
 		
-		if inf_get != ["",""]:
-			label_title.text = inf_get[0]
-			label_text.text = inf_get[1]
+		
 	pass
 
 
 func _on_button_exit_pressed():
 	get_tree().quit() # プログラム終了
+
+
+func _on_button_back_pressed():
+	if inf_num > 1:
+		inf_num -= 1
+		label_title.text = inf_list[inf_num][0]
+		label_text.text = inf_list[inf_num][1]
+	
+	pass # Replace with function body.
