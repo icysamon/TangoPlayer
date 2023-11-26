@@ -129,7 +129,7 @@ func on_files_dropped(files):
 	if files.size() == 1:
 		file_flag = true
 		file_data.init(files)
-		_on_button_next_pressed()
+		if file_data.type == "txt": _on_button_next_pressed()
 
 
 	else:
@@ -159,7 +159,7 @@ func on_mouse_exited():
 
 
 func _on_button_next_pressed():
-	if file_flag:
+	if file_flag && file_data.type == "txt":
 		if inf_num == inf_last:
 			# Get information from FileData
 			var inf_get = []

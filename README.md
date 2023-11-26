@@ -1,6 +1,6 @@
-# Tango Player
-## Introduction
-A mdx parser in Godot, which run by godot's xml parser.
+# TangoPlayer
+A dictionary imade by Godot, you should drag a txt which converted from mdx into the program.
+![](Picture.png)
 
-## Path
-- Godot 4
+## Paths
+- Godot 4.1

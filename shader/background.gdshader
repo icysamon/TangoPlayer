@@ -7,7 +7,7 @@ void fragment() {
 	// Place fragment code here.
 	COLOR = texture(TEXTURE, UV);
 	//COLOR = color;
-	COLOR = vec4(sin(TIME)/2.0,0.8,1.0,0.8);
+	COLOR = vec4(sin(TIME)/2.0,0.8,1.0,0.9);
 	
 	
 	
